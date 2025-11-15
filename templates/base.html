@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 CDN -->
+    <link 
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+    <!-- Add custom styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>{% block title %}My App{% endblock %}</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- ───────────── HEADER / NAVBAR ───────────── -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <!-- Left: Home Icon -->
+        <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="{{ url_for('static', filename='media/textailes-logo.svg') }}" 
+            alt="Home" height="28" class="me-2">
+        </a>
+
+        <!-- Navbar toggle for mobile -->
+        <button 
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible area -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+
+        <!-- Center Buttons -->
+        <ul class="navbar-nav mx-auto gap-4">
+
+            <!-- Button 1 -->
+            <li class="nav-item">
+            <a class="nav-link d-flex flex-column align-items-center" href="#">
+                Link1
+            </a>
+            </li>
+
+            <!-- Button 2 -->
+            <li class="nav-item">
+            <a class="nav-link d-flex flex-column align-items-center" href="#">
+                Link2
+            </a>
+            </li>
+
+            <!-- Button 3 -->
+            <li class="nav-item">
+            <a class="nav-link d-flex flex-column align-items-center" href="#">
+                Link3
+            </a>
+            </li>
+
+        </ul>
+
+        <!-- Right: User Icon + Username -->
+        <div class="d-flex align-items-center">
+            <img src="{{ url_for('static', filename='media/avatar.png') }}" 
+                height="28" class="me-2" alt="User">
+            <span class="navbar-text">
+            {{ username if username is defined else "Guest" }}
+            </span>
+        </div>
+
+        </div>
+    </div>
+    </nav>
+
+
+    <!-- ───────────── MAIN CONTENT ───────────── -->
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ───────────── FOOTER ───────────── -->
+    <footer class="site-footer bg-dark text-light py-3">
+        <div class="container text-center">
+            <p class="mb-1">Powered by TEXTaiLES.</p>
+            <p class="mb-0">
+                <a href="#" class="text-decoration-none text-info">Documentation</a> ·
+                <a href="#" class="text-decoration-none text-info">GitHub</a> ·
+                <a href="#" class="text-decoration-none text-info">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script 
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+</body>
+</html>

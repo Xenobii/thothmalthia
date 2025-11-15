@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- Full viewport wrapper -->
+<div class="hero-wrapper position-relative w-100"
+     style="--hero-bg: url('{{ url_for('static', filename=background_image) if background_image is defined else url_for('static', filename='media/background.png') }}');">
+
+    <!-- Gradient overlay for better readability -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 hero-overlay"></div>
+
+    <!-- Centered content -->
+    <div class="d-flex flex-column justify-content-center align-items-center text-center px-3 hero-content">
+
+        <!-- Main text -->
+        <h1 class="display-5 fw-bold mb-2 hero-title">
+            Welcome to TEXTaiLES
+        </h1>
+        <p class="lead text-muted mb-5 hero-subtitle">
+            Please select your options below to get started
+        </p>
+
+        <!-- Dropdown buttons row -->
+        <div class="d-flex gap-4 flex-wrap justify-content-center mb-4">
+
+            <!-- Dropdown A -->
+            <div class="dropdown dropdown-card">
+                <button class="btn btn-lg w-100 dropdown-toggle shadow-sm btn-gradient btn-a" 
+                        type="button" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                    Option A
+                </button>
+                <ul class="dropdown-menu w-100 shadow-lg border-0 dropdown-menu-custom">
+                    <li><a class="dropdown-item rounded-2 py-2 px-3 dropdown-item-custom" href="#">Choice A1</a></li>
+                    <li><a class="dropdown-item rounded-2 py-2 px-3 dropdown-item-custom" href="#">Choice A2</a></li>
+                </ul>
+            </div>
+
+            <!-- Dropdown B -->
+            <div class="dropdown dropdown-card">
+                <button class="btn btn-lg w-100 dropdown-toggle shadow-sm btn-gradient btn-b" 
+                        type="button" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                    Option B
+                </button>
+                <ul class="dropdown-menu w-100 shadow-lg border-0 dropdown-menu-custom">
+                    <li><a class="dropdown-item rounded-2 py-2 px-3 dropdown-item-custom" href="#">Choice B1</a></li>
+                    <li><a class="dropdown-item rounded-2 py-2 px-3 dropdown-item-custom" href="#">Choice B2</a></li>
+                </ul>
+            </div>
+
+            <!-- Dropdown C -->
+            <div class="dropdown dropdown-card">
+                <button class="btn btn-lg w-100 dropdown-toggle shadow-sm btn-gradient btn-c" 
+                        type="button" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                    Option C
+                </button>
+                <ul class="dropdown-menu w-100 shadow-lg border-0 dropdown-menu-custom">
+                    <li><a class="dropdown-item rounded-2 py-2 px-3 dropdown-item-custom" href="#">Choice C1</a></li>
+                    <li><a class="dropdown-item rounded-2 py-2 px-3 dropdown-item-custom" href="#">Choice C2</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
