@@ -63,19 +63,25 @@ def train_model():
 
     advanced_config = {
         "learning_rate": {
-            "slider": "discrete",
-            "values": [0.00001, 0.0001, 0.001, 0.01, 0.1]
+            "range" : "discrete",
+            "values": [0.00001, 0.0001, 0.001, 0.01, 0.1],
+            "lower" : 0.00001,
+            "upper" : 0.1
         },
         "batch_size": {
-            "slider": "discrete",
-            "values": [1, 2, 4, 8, 16, 32, 64]
+            "range" : "discrete",
+            "values": [1, 2, 4, 8, 16, 32, 64],
+            "lower" : 1,
+            "upper" : 64
         },
         "epochs": {
-            "slider": "continuous",
-            "min"   : 1,
-            "max"   : 100,
-            "step"  : 1
-        }
+            "range": "continuous",
+            "min"  : 1,
+            "max"  : 100,
+            "step" : 1,
+            "lower": 1,
+            "upper": 100
+        },
     }
 
     data = MODE_INFO[mode]

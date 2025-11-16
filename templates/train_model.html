@@ -99,17 +99,58 @@
                     <div class="collapse" id="advancedOptions">
 
                         {% for param, config in advanced_config.items() %}
-                        <div class="mb-4 advanced-param" data-param="{{param}}">
-                            
-                            <h6 class="text-capitalize">{{ param.replace('_',' ') }}</h6>
+                        <div class="mb-3">
+                            <label class="form-label text-capitalize">{{ param.replace('_', ' ') }}</label>
 
-                            <!-- Row 1: min/max numeric inputs -->
-                            <div class="row g-2 align-items-center mb-2">
-                                
+                            <div class="row g-2 align-items-center">
+
+                                <!-- LOWER -->
+                                <div class="col">
+                                    {% if config.range == "discrete" %}
+                                        <select class="form-select advanced-lower"
+                                                data-param="{{ param }}">
+                                            {% for val in config['values'] %}
+                                            <option value="{{ val }}" {% if val == config.lower %}selected{% endif %}>{{ val }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <input type="number" class="form-control advanced-lower"
+                                            min="{{ config.min }}" max="{{ config.max }}" step="{{ config.step }}"
+                                            value="{{ config.lower }}"
+                                            placeholder="Lower"
+                                            data-param="{{ param }}">
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-auto text-center">
+                                    <span class="small">≤</span>
+                                </div>
+
+                                <!-- UPPER -->
+                                <div class="col">
+                                    {% if config.range == "discrete" %}
+                                        <select class="form-select advanced-upper"
+                                                data-param="{{ param }}">
+                                            {% for val in config['values'] %}
+                                            <option value="{{ val }}" {% if val == config.upper %}selected{% endif %}>{{ val }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <input type="number" class="form-control advanced-upper"
+                                            min="{{ config.min }}" max="{{ config.max }}" step="{{ config.step }}"
+                                            value="{{ config.upper }}"
+                                            placeholder="Upper"
+                                            data-param="{{ param }}">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="invalid-feedback d-none mt-1 advanced-error" 
+                                data-param="{{ param }}">
+                                Invalid input
                             </div>
                         </div>
-                        {% endfor %}
 
+                        {% endfor %}
                     </div>
 
                 </div>
