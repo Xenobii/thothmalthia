@@ -88,17 +88,24 @@ TRAINED_MODELS = {
 
 INFERED_DATASETS = {
     "dataset1": [
-            {
-                "name"        : "image1",
-                "input_image" : "none",
-                "output_image": "none"
-            },
-            {
-                "name"        : "image2",
-                "input_image" : "none",
-                "output_image": "none"
-            }
-        ],
+        {
+            "name"        : "image1",
+            "input_image" : "none",
+            "output_image": "none"
+        },
+        {
+            "name"        : "image2",
+            "input_image" : "none",
+            "output_image": "none"
+        }
+    ],
+    "dataset2": [
+        {
+            "name"       : "image1",
+            "input_image": "none",
+            "class"      : "bullshit"
+        }
+    ]
 }
 
 
@@ -170,12 +177,15 @@ def models():
 
 @app.route('/inference')
 def inference():
-    id = request.args.get("id")
+    id       = request.args.get("id")
+    category = request.args.get("category")
+
     model = TRAINED_MODELS["classification"]["models"][int(id)]
-    results = INFERED_DATASETS["dataset1"]
-    print("HERE HERE ", results)
+    results = INFERED_DATASETS["dataset2"]
+    
     return render_template(
         "inference.html",
+        mode         = category,
         model        = model,
         results      = results,
         metric_label = "mIoU Score",
