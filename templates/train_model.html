@@ -26,10 +26,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for name, type in model_list %} 
+                            {% for model in models %} 
                             <tr>
-                                <td>{{ name }}</td>
-                                <td>{{ type }}</td>
+                                <td>{{ model.name }}</td>
+                                <td>2D Images</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -42,16 +42,16 @@
                 <label for="modelSelect" class="form-label">Model</label>
                 <select class="form-select mb-3" id="modelSelect">
                     <option selected>Choose model</option>
-                    {% for name, _ in model_list %}
-                    <option>{{ name }}</option>
+                    {% for model in models %}
+                    <option>{{ model.name }}</option>
                     {% endfor %}
                 </select>
 
                 <label for="collectionSelect" class="form-label">Collection</label>
                 <select class="form-select" id="collectionSelect">
                     <option selected>Choose collection</option>
-                    {% for name in collection_list %}
-                    <option>{{ name }}</option>
+                    {% for collection in collection_list %}
+                    <option>{{ collection.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -88,21 +88,33 @@
 
             </div>
 
-            <!-- Bottom container: advanced options -->
+            <!-- Advanced Options -->
             <div class="card">
                 <div class="card-body">
-                    <button class="btn btn-secondary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions">
+                    <button class="btn btn-secondary w-100 mb-3" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#advancedOptions">
                         Advanced Options
                     </button>
+
                     <div class="collapse" id="advancedOptions">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Option A: Value</li>
-                            <li class="list-group-item">Option B: Value</li>
-                            <li class="list-group-item">Option C: Value</li>
-                        </ul>
+
+                        {% for param, config in advanced_config.items() %}
+                        <div class="mb-4 advanced-param" data-param="{{param}}">
+                            
+                            <h6 class="text-capitalize">{{ param.replace('_',' ') }}</h6>
+
+                            <!-- Row 1: min/max numeric inputs -->
+                            <div class="row g-2 align-items-center mb-2">
+                                
+                            </div>
+                        </div>
+                        {% endfor %}
+
                     </div>
+
                 </div>
             </div>
+
 
         </div>
     </div>

@@ -172,3 +172,7 @@ th.sortable[aria-sort] {
         margin-bottom: 2rem;
     }
 }
+
+.advanced-param h6 {
+    margin-bottom: 0.5rem;
+}
