@@ -33,7 +33,7 @@ def train_model():
     }
     if mode is None:
         mode = "segmentation"
-        
+
     data = MODE_INFO[mode]
     
     return render_template(
@@ -51,7 +51,43 @@ def collections():
 
 @app.route('/models')
 def models():
-    return render_template("models.html")
+    mode = request.args.get("category")
+    MODE_INFO = {
+        "segmentation": {
+            "models": [
+                ("UNetlite", "Dataset1", "90%", "01/10/2000"),
+                ("FNetlite", "Eataset1", "80%", "01/10/2000"),
+            ]
+        },
+        "detection": {
+            "models": [
+                ("UNetlite", "Dataset1", "20%", "01/10/2000"),
+            ]
+        },
+        "classification": {
+            "models": [
+                ("UNetlite", "Dataset1", "90%", "01/10/2000"),
+            ]
+        },
+    }
+    if mode is None:
+        mode = "segmentation"
+
+    data = MODE_INFO[mode]
+
+    return render_template(
+        "models.html",
+        mode       = mode,
+        model_list = data["models"],
+        error = "test message"
+    )
+
+@app.route('/inference')
+def inference(name):
+    return render_template(
+        "inference.html",
+        name=name
+    )
 
 
 if __name__ == "__main__":

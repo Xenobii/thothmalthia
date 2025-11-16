@@ -107,6 +107,43 @@ main.flex-grow-1 {
     transform: translateX(4px);
 }
 
+/* sortable headers: pointer, space for arrow and arrow drawing via ::after */
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 1.75rem; /* make room for the arrow */
+    transition: color .12s ease;
+}
+
+/* show a triangular arrow only when aria-sort is present on the header */
+th.sortable[aria-sort]::after {
+    content: "";
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+}
+
+/* ascending -> small up-triangle */
+th.sortable[aria-sort="ascending"]::after {
+    border-bottom: 8px solid #0d6efd; /* use Bootstrap primary color */
+}
+
+/* descending -> small down-triangle */
+th.sortable[aria-sort="descending"]::after {
+    border-top: 8px solid #0d6efd;
+}
+
+/* subtle underline for active sorted header */
+th.sortable[aria-sort] {
+    text-decoration: underline;
+}
+
 /* small responsive adjustments */
 @media (max-width: 576px) {
     .dropdown-card { width: 100%; max-width: 340px; }
