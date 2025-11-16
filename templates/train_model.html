@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Train Model{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Left / Main Content (70%) -->
+        <div class="col-lg-8 d-flex flex-column justify-content-center">
+            
+            <!-- Title and text -->
+            <h2 class="mb-3">Train a {{ mode }} model</h2>
+            <p class="mb-4">Use the options below to configure your model training and view parameters.</p>
+
+            <!-- Collapsible table -->
+            <div class="mb-4">
+                <button class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#tableCollapse" aria-expanded="true" aria-controls="tableCollapse">
+                    Available models
+                </button>
+                <div class="collapse show" id="tableCollapse">
+                    <table class="table table-striped mt-2">
+                        <thead>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Input Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for name, type in model_list %} 
+                            <tr>
+                                <td>{{ name }}</td>
+                                <td>{{ type }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Options with dropdowns -->
+            <div class="mb-3">
+                <label for="modelSelect" class="form-label">Model</label>
+                <select class="form-select mb-3" id="modelSelect">
+                    <option selected>Choose model</option>
+                    {% for name, _ in model_list %}
+                    <option>{{ name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="collectionSelect" class="form-label">Collection</label>
+                <select class="form-select" id="collectionSelect">
+                    <option selected>Choose collection</option>
+                    {% for name in collection_list %}
+                    <option>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Text + button -->
+            <p class="mt-4">The best result will be saved in Models</p>
+            <button class="btn btn-success">Start Training</button>
+
+        </div>
+
+        <!-- Right Sidebar (30%) -->
+        <div class="col-lg-4">
+
+            <!-- Top container: three buttons -->
+            <div class="d-flex justify-content-between mb-4">
+
+                <a href="{{ url_for('train_model', category='segmentation') }}"
+                class="btn btn-outline-primary flex-fill me-2
+                        {% if category == 'segmentation' %}active{% endif %}">
+                    Segmentation
+                </a>
+
+                <a href="{{ url_for('train_model', category='classification') }}"
+                class="btn btn-outline-primary flex-fill me-2
+                        {% if category == 'classification' %}active{% endif %}">
+                    Classification
+                </a>
+
+                <a href="{{ url_for('train_model', category='detection') }}"
+                class="btn btn-outline-primary flex-fill
+                        {% if category == 'detection' %}active{% endif %}">
+                    Detection
+                </a>
+
+            </div>
+
+            <!-- Bottom container: advanced options -->
+            <div class="card">
+                <div class="card-body">
+                    <button class="btn btn-secondary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions">
+                        Advanced Options
+                    </button>
+                    <div class="collapse" id="advancedOptions">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Option A: Value</li>
+                            <li class="list-group-item">Option B: Value</li>
+                            <li class="list-group-item">Option C: Value</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
