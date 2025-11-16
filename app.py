@@ -49,6 +49,59 @@ MODE_INFO = {
 }
 
 
+TRAINED_MODELS = {
+    "segmentation": {
+        "models": [
+            {
+                "name"      : "UNet VERY OLD MODEL 2016",
+                "id"        : "0",
+                "trained_on": "nudes",
+                "score"     : 0.9,
+                "date"      : "01.10.2000"
+            }
+        ]
+    },
+    "detection": {
+        "models": [
+            {
+                "name"      : "UNet VERY OLD MODEL 2016",
+                "id"        : "0",
+                "trained_on": "nudes",
+                "score"     : 0.9,
+                "date"      : "01/10/2000"
+            }
+        ]
+    },
+    "classification": {
+        "models": [
+            {
+                "name"      : "UNet VERY OLD MODEL 2016",
+                "id"        : "0",
+                "trained_on": "nudes",
+                "score"     : 0.9,
+                "date"      : "01"
+            }
+        ]
+    },
+}
+
+
+INFERED_DATASETS = {
+    "dataset1": [
+            {
+                "name"        : "image1",
+                "input_image" : "none",
+                "output_image": "none"
+            },
+            {
+                "name"        : "image2",
+                "input_image" : "none",
+                "output_image": "none"
+            }
+        ],
+}
+
+
 @app.route("/")
 def index():
     return render_template("index.html", is_homepage=True)
@@ -103,58 +156,31 @@ def collections():
 @app.route('/models')
 def models():
     mode = request.args.get("category")
-    MODE_INFO = {
-        "segmentation": {
-            "models": [
-                ("UNetlite", "Dataset1", "90%", "01/10/2000"),
-                ("FNetlite", "Eataset1", "80%", "01/10/2000"),
-            ]
-        },
-        "detection": {
-            "models": [
-                ("UNetlite", "Dataset1", "20%", "01/10/2000"),
-            ]
-        },
-        "classification": {
-            "models": [
-                ("UNetlite", "Dataset1", "90%", "01/10/2000"),
-            ]
-        },
-    }
     if mode is None:
         mode = "segmentation"
 
-    data = MODE_INFO[mode]
+    data = TRAINED_MODELS[mode]
 
     return render_template(
         "models.html",
-        mode       = mode,
-        model_list = data["models"],
-        error      = "test message"
+        mode   = mode,
+        models = data["models"],
+        error  = "test message"
     )
 
 @app.route('/inference')
 def inference():
-    name = request.args.get("name")
-    attributes = {
-        "name"      : name,
-        "Trained on": "ZLU-Leaper",
-        "mIoU"      : 72.3
-    }
-    results = [
-        {
-            "name" : name,
-            "image": "undefined",
-            "mask" : "undefined"
-        }
-    ]
-    print(results)
+    id = request.args.get("id")
+    model = TRAINED_MODELS["classification"]["models"][int(id)]
+    results = INFERED_DATASETS["dataset1"]
+    print("HERE HERE ", results)
     return render_template(
         "inference.html",
-        attributes = attributes,
-        results    = results,
-        error      = "test",
-        success    = "Good"
+        model        = model,
+        results      = results,
+        metric_label = "mIoU Score",
+        error        = "test",
+        success      = "Good"
     )
 
 

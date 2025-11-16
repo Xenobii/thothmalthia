@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container-fluid py-4">
 
-	<!-- Exception display -->
+    <!-- Exception display -->
     <div class="d-flex justify-content-between mb-4">
         <div class="col-12">
             {% if error %}
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-	<!-- Success display -->
+    <!-- Success display -->
     <div class="d-flex justify-content-between mb-4">
         <div class="col-12">
             {% if success %}
@@ -26,19 +26,23 @@
             {% endif %}
         </div>
     </div>
-	
+    
   <div class="row">
 
     <!-- LEFT COLUMN (Model Description) -->
     <div class="col-lg-4 col-md-5 col-12 mb-4">
       <div class="p-4 rounded shadow-sm bg-light">
-        <h3 class="text-center mb-4">{{ attributes.name }}</h3>
+        <h3 class="text-center mb-4">{{ model.name }}</h3>
         <table class="table table-borderless">
           <tbody>
-            {% for key, value in attributes.items() %}
+            {% for key, value in model.items() %}
             <tr>
-              <th style="width: 30%">{{ key }}</th>
-              <td>{{ value }}</td>
+              <th class="form-label text-capitalize" style="width: 30%">{{ key.replace('_', ' ') }}</th>
+              {% if key == "score" %}
+                <td>{{ value }} {{ metric_label }}</td>
+              {% else %}
+                <td>{{ value }}</td>
+              {% endif %}
             </tr>
             {% endfor %}
           </tbody>
@@ -68,7 +72,7 @@
           <tr>
             <td>
               <button type="button" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-{{ loop.index }}">
-                {{ result.name }}
+                {{ result['name'] }}
               </button>
 
               <!-- Modal -->
@@ -80,19 +84,19 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex justify-content-around">
-                      <img src="{{ result.image }}" alt="{{ result.name }} image" class="img-fluid me-2" style="max-height: 300px;">
-                      <img src="{{ result.mask }}" alt="{{ result.name }} mask" class="img-fluid ms-2" style="max-height: 300px;">
+                      <img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-fluid me-2" style="max-height: 300px;">
+                      <img src="{{ result['output_image'] }}" alt="{{ result['name'] }} mask" class="img-fluid ms-2" style="max-height: 300px;">
                     </div>
                     <div class="modal-footer">
-                      <a href="{{ result.image }}" download class="btn btn-primary">Download</a>
+                      <a href="{{ result['input_image'] }}" download class="btn btn-primary">Download</a>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
                     </div>
                   </div>
                 </div>
               </div>
             </td>
-            <td><img src="{{ result.image }}" alt="{{ result.name }} image" class="img-thumbnail" style="max-height: 100px;"></td>
-            <td><img src="{{ result.mask }}" alt="{{ result.name }} mask" class="img-thumbnail" style="max-height: 100px;"></td>
+            <td><img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-thumbnail" style="max-height: 100px;"></td>
+            <td><img src="{{ result['output_image'] }}" alt="{{ result['name'] }} mask" class="img-thumbnail" style="max-height: 100px;"></td>
           </tr>
           {% endfor %}
         </tbody>

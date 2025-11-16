@@ -57,16 +57,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for name, trained_on, score, creation_date in model_list %}
+                    {% for model in models %}
                     <tr>
                         <td>
-                            <a href="{{url_for('inference', name=name)}}">
-                            {{ name }}
+                            <a href="{{url_for('inference', id=model.id)}}">
+                            {{ model.name }}
                             </a>
                         </td>
-                        <td>{{ trained_on }}</td>
-                        <td>{{ score }}</td>
-                        <td>{{ creation_date }}</td>
+                        <td>{{ model.trained_on }}</td>
+                        <td>{{ model.score }}</td>
+                        <td>{{ model.date }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
