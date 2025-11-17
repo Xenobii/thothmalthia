@@ -27,127 +27,127 @@
         </div>
     </div>
     
-  <div class="row">
+    <div class="row">
 
-    <!-- LEFT COLUMN (Model Description) -->
-    <div class="col-lg-4 col-md-5 col-12 mb-4">
-      <div class="p-4 rounded shadow-sm bg-light">
-        <h3 class="text-center mb-4">{{ model.name }}</h3>
-        <table class="table table-borderless">
-          <tbody>
-            {% for key, value in model.items() %}
-            <tr>
-              <th class="form-label text-capitalize" style="width: 30%">{{ key.replace('_', ' ') }}</th>
-              {% if key == "score" %}
-                <td>{{ value }} {{ metric_label }}</td>
-              {% else %}
-                <td>{{ value }}</td>
-              {% endif %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <hr>
-        <div class="d-flex flex-column gap-3 mt-4">
-          <button class="btn btn-outline-primary btn-lg w-100">Upload Images</button>
-          <button class="btn btn-outline-secondary btn-lg w-100">Select from Database</button>
-          <button class="btn btn-success btn-lg w-100 mt-3">Start Inference</button>
+        <!-- LEFT COLUMN (Model Description) -->
+        <div class="col-lg-4 col-md-5 col-12 mb-4">
+            <div class="p-4 rounded shadow-sm bg-light">
+                <h3 class="text-center mb-4">{{ model.name }}</h3>
+                <table class="table table-borderless">
+                    <tbody>
+                        {% for key, value in model.items() %}
+                        <tr>
+                            <th class="form-label text-capitalize" style="width: 30%">{{ key.replace('_', ' ') }}</th>
+                            {% if key == "score" %}
+                                <td><span class="badge bg-success bg-opacity-75">{{ value }} {{ metric_label }}</span></td>
+                            {% else %}
+                                <td>{{ value }}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <hr>
+                <div class="d-flex flex-column gap-3 mt-4">
+                    <button class="btn btn-outline-primary btn-lg w-100">Upload Images</button>
+                    <button class="btn btn-outline-secondary btn-lg w-100">Select from Database</button>
+                    <button class="btn btn-success btn-lg w-100 mt-3">Start Inference</button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- RIGHT COLUMN (Inference Results) -->
-    <div class="col-lg-8 col-md-7 col-12">
-      {% if results %}
-      <table class="table table-striped">
-        <!-- Classification mode -->
-        {% if mode == 'classification' %}
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Class</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for result in results %}
-          <tr>
-            <td>
-              <button type="button" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-{{ loop.index }}">
-                {{ result['name'] }}
-              </button>
-              
-              <!-- Modal -->
-              <div class="modal fade" id="modal-{{ loop.index }}" tabindex="-1" aria-labelledby="modalLabel-{{ loop.index }}" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="modalLabel-{{ loop.index }}">{{ result['name'] }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex justify-content-around">
-                      <img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-fluid me-2" style="max-height: 300px;">
-                    </div>
-                    <div class="modal-footer">
-                      <a href="{{ result['input_image'] }}" download class="btn btn-primary">Download</a>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td><img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-thumbnail" style="max-height: 100px;"></td>
-            <td>{{ result['class'] }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-        {% else %}
-        <!-- Other modes -->
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Mask</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for result in results %}
-          <tr>
-            <td>
-              <button type="button" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-{{ loop.index }}">
-                {{ result['name'] }}
-              </button>
-              
-              <!-- Modal -->
-              <div class="modal fade" id="modal-{{ loop.index }}" tabindex="-1" aria-labelledby="modalLabel-{{ loop.index }}" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="modalLabel-{{ loop.index }}">{{ result['name'] }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex justify-content-around">
-                      <img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-fluid me-2" style="max-height: 300px;">
-                      <img src="{{ result['output_image'] }}" alt="{{ result['name'] }} mask" class="img-fluid ms-2" style="max-height: 300px;">
-                    </div>
-                    <div class="modal-footer">
-                      <a href="{{ result['input_image'] }}" download class="btn btn-primary">Download</a>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td><img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-thumbnail" style="max-height: 100px;"></td>
-            <td><img src="{{ result['output_image'] }}" alt="{{ result['name'] }} mask" class="img-thumbnail" style="max-height: 100px;"></td>
-          </tr>
-          {% endfor %}
-        </tbody>
+        <!-- RIGHT COLUMN (Inference Results) -->
+        <div class="col-lg-8 col-md-7 col-12">
+            {% if results %}
+            <table class="table table-striped">
+                <!-- Classification mode -->
+                {% if mode == 'classification' %}
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-{{ loop.index }}">
+                                {{ result['name'] }}
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-{{ loop.index }}" tabindex="-1" aria-labelledby="modalLabel-{{ loop.index }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabel-{{ loop.index }}">{{ result['name'] }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body d-flex justify-content-around">
+                                            <img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-fluid me-2" style="max-height: 300px;">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{{ result['input_image'] }}" download class="btn btn-primary">Download</a>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-thumbnail" style="max-height: 100px;"></td>
+                        <td>{{ result['class'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <!-- Other modes -->
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Mask</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-{{ loop.index }}">
+                                {{ result['name'] }}
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-{{ loop.index }}" tabindex="-1" aria-labelledby="modalLabel-{{ loop.index }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabel-{{ loop.index }}">{{ result['name'] }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body d-flex justify-content-around">
+                                            <img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-fluid me-2" style="max-height: 300px;">
+                                            <img src="{{ result['output_image'] }}" alt="{{ result['name'] }} mask" class="img-fluid ms-2" style="max-height: 300px;">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{{ result['input_image'] }}" download class="btn btn-primary">Download</a>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><img src="{{ result['input_image'] }}" alt="{{ result['name'] }} image" class="img-thumbnail" style="max-height: 100px;"></td>
+                        <td><img src="{{ result['output_image'] }}" alt="{{ result['name'] }} mask" class="img-thumbnail" style="max-height: 100px;"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
         {% endif %}
-      </table>
-    </div>
-    {% endif %}
 
-  </div>
+    </div>
 </div>
 {% endblock %}

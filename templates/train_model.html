@@ -28,7 +28,9 @@
                         <tbody>
                             {% for model in models %} 
                             <tr>
-                                <td>{{ model.name }}</td>
+                                <td>
+                                    <a href="{{model.url}}">{{ model.name }}</a>
+                                </td>
                                 <td>2D Images</td>
                             </tr>
                             {% endfor %}
@@ -45,6 +47,7 @@
                     {% for model in models %}
                     <option>{{ model.name }}</option>
                     {% endfor %}
+                    <option value=" ">All the above</option>
                 </select>
 
                 <label for="collectionSelect" class="form-label">Collection</label>
@@ -68,21 +71,21 @@
             <!-- Top container: three buttons -->
             <div class="d-flex justify-content-between mb-4">
 
-                <a href="{{ url_for('train_model', category='segmentation') }}"
+                <a href="{{ url_for('train_model', mode='segmentation') }}"
                 class="btn btn-outline-primary flex-fill me-2
-                        {% if category == 'segmentation' %}active{% endif %}">
+                        {% if mode == 'segmentation' %}active{% endif %}">
                     Segmentation
                 </a>
 
-                <a href="{{ url_for('train_model', category='classification') }}"
+                <a href="{{ url_for('train_model', mode='classification') }}"
                 class="btn btn-outline-primary flex-fill me-2
-                        {% if category == 'classification' %}active{% endif %}">
+                        {% if mode == 'classification' %}active{% endif %}">
                     Classification
                 </a>
 
-                <a href="{{ url_for('train_model', category='detection') }}"
+                <a href="{{ url_for('train_model', mode='detection') }}"
                 class="btn btn-outline-primary flex-fill
-                        {% if category == 'detection' %}active{% endif %}">
+                        {% if mode == 'detection' %}active{% endif %}">
                     Detection
                 </a>
 

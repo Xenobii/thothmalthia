@@ -24,21 +24,21 @@
             <!-- Top container: three buttons -->
                 <div class="d-flex justify-content-between mb-4">
     
-                    <a href="{{ url_for('models', category='segmentation') }}"
+                    <a href="{{ url_for('models', mode='segmentation') }}"
                     class="btn btn-outline-primary flex-fill me-2
-                            {% if category == 'segmentation' %}active{% endif %}">
+                            {% if mode == 'segmentation' %}active{% endif %}">
                         Segmentation
                     </a>
     
-                    <a href="{{ url_for('models', category='classification') }}"
+                    <a href="{{ url_for('models', mode='classification') }}"
                     class="btn btn-outline-primary flex-fill me-2
-                            {% if category == 'classification' %}active{% endif %}">
+                            {% if mode == 'classification' %}active{% endif %}">
                         Classification
                     </a>
     
-                    <a href="{{ url_for('models', category='detection') }}"
+                    <a href="{{ url_for('models', mode='detection') }}"
                     class="btn btn-outline-primary flex-fill
-                            {% if category == 'detection' %}active{% endif %}">
+                            {% if mode == 'detection' %}active{% endif %}">
                         Detection
                     </a>
     
@@ -65,7 +65,7 @@
                             </a>
                         </td>
                         <td>{{ model.trained_on }}</td>
-                        <td>{{ model.score }}</td>
+                        <td><span class="badge bg-success bg-opacity-75">{{ model.score }}</span></td>
                         <td>{{ model.date }}</td>
                     </tr>
                     {% endfor %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Train Model{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+    <!-- Exception display -->
+    <div class="d-flex justify-content-between mb-4">
+        <div class="col-12">
+            {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mb-4">
+        <div class="col-lg-8 d-flex flex-column justify-content-center">
+            <h2 class="mb-3">Collections</h2>
+        </div>
+        <div class="col-lg-4">
+            <!-- Top container: three buttons -->
+                <div class="d-flex justify-content-between mb-4">
+    
+                    <a href="{{ url_for('collections', mode='segmentation') }}"
+                    class="btn btn-outline-primary flex-fill me-2
+                            {% if mode == 'segmentation' %}active{% endif %}">
+                        Segmentation
+                    </a>
+    
+                    <a href="{{ url_for('collections', mode='classification') }}"
+                    class="btn btn-outline-primary flex-fill me-2
+                            {% if mode == 'classification' %}active{% endif %}">
+                        Classification
+                    </a>
+    
+                    <a href="{{ url_for('collections', mode='detection') }}"
+                    class="btn btn-outline-primary flex-fill
+                            {% if mode == 'detection' %}active{% endif %}">
+                        Detection
+                    </a>
+    
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-4">
+            <table id="datasets" class="table table-striped mt-2">
+                <thead>
+                    <tr>
+                        <th class="sortable" data-type="string" onclick="sortTable('datasets', 0)">Collection Name</th>
+                        <th class="sortable" data-type="string" onclick="sortTable('datasets', 1)">Type of Data</th>
+                        <th class="sortable" data-type="number" onclick="sortTable('datasets', 2)">Number of Samples</th>
+                        <th class="sortable" data-type="date" onclick="sortTable('datasets', 3)">Creation date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dataset in datasets %}
+                    <tr>
+                        <td>
+                            <a href="{{dataset.url}}">
+                            {{ dataset.name }}
+                            </a>
+                        </td>
+                        <td>{{ dataset.type }}</td>
+                        <td>{{ dataset.num_samples }}</td>
+                        <td>{{ dataset.date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

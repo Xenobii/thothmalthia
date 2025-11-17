@@ -13,8 +13,10 @@ MODE_INFO = {
         ],
         "collections": [
             {
-                "name" : "nudes",
-                "num_samples": 5000
+                "name"       : "nudes",
+                "type"       : "images",
+                "num_samples": 5000,
+                "date"       : 1
             }
         ]
     },
@@ -27,8 +29,10 @@ MODE_INFO = {
         ],
         "collections": [
             {
-                "name" : "nudes",
-                "num_samples": 5000
+                "name"       : "nudes",
+                "type"       : "images",
+                "num_samples": 500000,
+                "date"       : 1
             }
         ]
     },
@@ -41,8 +45,10 @@ MODE_INFO = {
         ],
         "collections": [
             {
-                "name" : "nudes",
-                "num_samples": 5000
+                "name"       : "nudes",
+                "type"       : "images",
+                "num_samples": 50000,
+                "date"       : 1
             }
         ]
     },
@@ -86,6 +92,7 @@ TRAINED_MODELS = {
 }
 
 
+
 INFERED_DATASETS = {
     "dataset1": [
         {
@@ -116,7 +123,7 @@ def index():
 
 @app.route('/train_model')
 def train_model():
-    mode = request.args.get("category")
+    mode = request.args.get("mode")
     
     if mode is None:
         mode = "segmentation"
@@ -157,12 +164,26 @@ def train_model():
 
 @app.route('/collections')
 def collections():
-    return render_template("collections.html")
+    mode = request.args.get("mode")
+
+    if mode is None:
+        mode = "segmentation"
+
+    data = MODE_INFO[mode]
+
+    print(data["collections"])
+
+    return render_template(
+        "collections.html",
+        mode     = mode,
+        datasets = data["collections"]
+    )
 
 
 @app.route('/models')
 def models():
-    mode = request.args.get("category")
+    mode = request.args.get("mode")
+    
     if mode is None:
         mode = "segmentation"
 
@@ -177,15 +198,18 @@ def models():
 
 @app.route('/inference')
 def inference():
-    id       = request.args.get("id")
-    category = request.args.get("category")
+    id   = request.args.get("id")
+    mode = request.args.get("mode")
+    
+    if mode is None:
+        mode = "segmentation"
 
     model = TRAINED_MODELS["classification"]["models"][int(id)]
     results = INFERED_DATASETS["dataset2"]
     
     return render_template(
         "inference.html",
-        mode         = category,
+        mode         = mode,
         model        = model,
         results      = results,
         metric_label = "mIoU Score",
